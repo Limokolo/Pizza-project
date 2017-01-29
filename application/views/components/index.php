@@ -31,7 +31,7 @@
                 </tr>
             </thead>
             <tbody id="components_list_table">
-        <?php foreach($components as $component): ?>
+        <?php foreach($components as $component):?>
               <tr>
                   <td><?=$component -> name?></td>
                   <td><?=$component -> price?> zł</td>
@@ -127,9 +127,15 @@
     <script>
       $(document).on('click', '.info-button', function(){
         var id = $(this).data('id');
+        var url = 'get/' + id + '?format=json';
+
+        if(window.location.href.lastIndexOf('/') < window.location.href.length - 1){
+          url = 'components/' + url;
+        }
+
 
         $.ajax({
-            url: 'get/' + id + '?format=json',
+            url: url,
             dataType: 'json',
             success: function(response){
               for(var i in response){

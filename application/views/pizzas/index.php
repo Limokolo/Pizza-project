@@ -26,13 +26,15 @@
             <thead>
                 <tr>
                   <th>Nazwa</th>
-                  <th>Szczegóły</th>
+                  <th>Cena</th>
+                  <th style="width: 100px;">Szczegóły</th>
                 </tr>
             </thead>
             <tbody id="components_list_table">
         <?php foreach($pizzas as $pizza): ?>
               <tr>
                   <td><?=$pizza -> name?></td>
+                  <td><?=$pizza -> price?> zł</td>
                   <td><button class="btn btn-info info-button" data-id="<?=$pizza -> id?>">Pokaż</button></td>
               </tr>
         <?php endforeach; ?>
@@ -62,6 +64,9 @@
             </p>
             <p class="component-notes">
                 Opis pizzy: <strong></strong>
+            </p>
+            <p class="component-price">
+                Cena pizzy: <strong></strong> zł
             </p>
 
             <table class="table">
@@ -128,9 +133,14 @@
     <script>
       $(document).on('click', '.info-button', function(){
         var id = $(this).data('id');
+        var url = 'get/' + id + '?format=json';
+
+        if(window.location.href.lastIndexOf('/') < window.location.href.length - 1){
+          url = 'pizzas/' + url;
+        }
 
         $.ajax({
-            url: 'get/' + id + '?format=json',
+            url: url,
             dataType: 'json',
             success: function(response){
               for(var i in response){

@@ -13,7 +13,7 @@ class Pizzas extends CI_Controller {
   }
 
   public function index(){
-    $this -> load -> view('pizza/index', [
+    $this -> load -> view('pizzas/index', [
         'pizzas' => $this -> Pizzas_model -> getAll()
     ]);
   }
@@ -23,7 +23,6 @@ class Pizzas extends CI_Controller {
 
     if($_id !== null) {
       $pizza = $this -> Pizzas_model -> get($_id);
-      $pizza -> components = $this -> Pizzas_model -> getComponents($pizza);
       if($pizza !== null){
         response($pizza);
       } else {
