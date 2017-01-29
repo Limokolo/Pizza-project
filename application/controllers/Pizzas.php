@@ -3,18 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require_once 'application/class/Pizza.php';
 require_once 'application/class/Component.php';
 
-class Pizza extends CI_Controller {
+class Pizzas extends CI_Controller {
 
   function __construct(){
     parent::__construct();
 
-    $this -> load -> model('Pizza_model');
+    $this -> load -> model('Pizzas_model');
     $this -> load -> helper('response');
   }
 
   public function index(){
     $this -> load -> view('pizza/index', [
-        'pizzas' => $this -> Pizza_model -> getAll()
+        'pizzas' => $this -> Pizzas_model -> getAll()
     ]);
   }
 
@@ -22,8 +22,8 @@ class Pizza extends CI_Controller {
     $this -> isAllowed();
 
     if($_id !== null) {
-      $pizza = $this -> Pizza_model -> get($_id);
-      $pizza -> components = $this -> Pizza_model -> getComponents($pizza);
+      $pizza = $this -> Pizzas_model -> get($_id);
+      $pizza -> components = $this -> Pizzas_model -> getComponents($pizza);
       if($pizza !== null){
         response($pizza);
       } else {

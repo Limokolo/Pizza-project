@@ -67,6 +67,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                      <th style="width: 50px;">Ilość</th>
                       <th>Nazwa</th>
                       <th>Cena</th>
                     </tr>
@@ -143,6 +144,10 @@
                 var component = response.components[i];
 
                 var tr = document.createElement('tr');
+
+                var count = document.createElement('td');
+                $(count).text(component.count);
+                $(tr).append(count);
 
                 var name = document.createElement('td');
                 $(name).text(component.name);
