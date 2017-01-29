@@ -17,6 +17,10 @@ class Components extends CI_Controller {
     ]);
   }
 
+  public function getAll(){
+    response($this -> Components_model -> getAll());
+  }
+
   public function get($_id = null){
     $this -> isAllowed();
 

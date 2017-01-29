@@ -15,6 +15,11 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <script>
+      var base_path = "<?=base_url()?>";
+    </script>
+
   </head>
   <body>
 
@@ -72,13 +77,25 @@
             <table class="table">
                 <thead>
                     <tr>
-                      <th style="width: 50px;">Ilość</th>
+                      <th style="width: 100px;">Ilość</th>
                       <th>Nazwa</th>
                       <th>Cena</th>
+                      <th></th>
                     </tr>
                 </thead>
                 <tbody class="pizza-components">
                 </tbody>
+                <tfoot>
+                  <tr>
+                      <form id="add_component_form">
+                        <td><input type="number" class="component_count form-control" name="count" min="1" max="20" value="1" /></td>
+                        <td><select class="components_list form-control" name="component_id"></select></td>
+                        <td><span class="component_price"></span></td>
+                        <td><input type="button" class="btn btn-success" id="add_component_button" value="Dodaj" /></td>
+                        <input type="hidden" class="pizza_id" name="pizza_id" />
+                      </form>
+                  </tr>
+                </tfoot>
             </table>
           </div>
           <div class="modal-footer">
@@ -131,13 +148,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <script>
+      var components_loaded = false;
+      var components_list = [];
+
       $(document).on('click', '.info-button', function(){
         var id = $(this).data('id');
-        var url = 'get/' + id + '?format=json';
-
-        if(window.location.href.lastIndexOf('/') < window.location.href.length - 1){
-          url = 'pizzas/' + url;
-        }
+        var url = base_path + '/pizzas/get/' + id + '?format=json';
 
         $.ajax({
             url: url,
@@ -165,16 +181,57 @@
 
                 var price = document.createElement('td');
                 $(price).text(component.price);
+                $(price).attr('colspan', 2);
                 $(tr).append(price);
 
                 $(components_table).append(tr);
 
               }
 
+              if(!components_loaded){
+                $.ajax({
+                  url: base_path + '/components/getAll?format=json',
+                  dataType: 'json',
+                  success: function(data){
+                    components_list = data;
+                    for(var i in data){
+                      var component = data[i];
+
+                      var component_option = document.createElement('option');
+                      $(component_option).val(component.id);
+                      $(component_option).text(component.name);
+
+                      $('#detailsModal').find('.components_list').append(component_option);
+                    }
+                    updateComponentsPrice();
+                    components_loaded = true;
+                  }
+                })
+              }
+
+              $('#detailsModal').find('.pizza_id').val(id);
+              $('#detailsModal').find('.component_count').val(1);
+
               $('#detailsModal').modal('show');
             }
         });
       });
+
+      function updateComponentsPrice(){
+        var id = $('#detailsModal').find('.components_list').val();
+        for(var i in components_list){
+          var component = components_list[i];
+          if(id === component.id){
+            var count = $('#detailsModal').find('.component_count').val();
+            var price = component.price * count;
+            $('#detailsModal').find('.component_price').text(price + " zł");
+            break;
+          }
+        }
+      }
+
+      $(document).on('change', '.component_count', updateComponentsPrice);
+      $(document).on('change', '.components_list', updateComponentsPrice);
 
       $(document).on('click', '#add-component-button', function(){
         $('#newModal').modal('show');
@@ -192,7 +249,7 @@
 
 
         $.ajax({
-            url: 'add/?format=json',
+            url: base_path + '/pizzas/add/?format=json',
             dataType: 'json',
             method: 'post',
             data: component_data,
