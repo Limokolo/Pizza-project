@@ -1,70 +1,37 @@
-###################
-What is CodeIgniter
-###################
+#Pizza project
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
 
-*******************
-Release Information
-*******************
+Wszyscy lubimy pizzę, ale nie każdy lokal może pochwalić się stroną internetową z aktualnym menu. Chcę wyjść im naprzeciw
+i zapewnić aplikację która pozwoli bez problemu zarządzać swoim menu. Projekt powstaje również w celu usystematyzowania
+dotychczasowej wiedzy i chęci przekazania jej dalej.
 
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `CodeIgniter Downloads
-<https://codeigniter.com/download>`_ page.
 
-**************************
-Changelog and New Features
-**************************
+![Daj się poznać 2017](https://czubeka2.pl/wp-content/uploads/2017/02/dsp2017-2.png) Projekt bierze udział w konkursie Daj się poznać 2017, a co za tym idzie, opisywany jest na moim blogu. Tam umieszczam
+przemyślenia na temat kolejnych kroków, które podejmę w kolejnych nagraniach.
 
-You can find a list of all changes for each release in the `user
-guide change log <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_.
+Strona projektu: [Daj się poznać 2017](http://devstyle.pl/daj-sie-poznac)
 
-*******************
-Server Requirements
-*******************
+###Materiały wideo
 
-PHP version 5.6 or newer is recommended.
+Głównym założeniem przy rozpoczęciu pracy nad Pizza Project, była chęć podzielenia się z moimi widzami wiedzą.
+Nagrywam zatem kilkugodzinne sesje, w któych piszę i omawiam kod. Wszystko to jest dostępne na moim kanale YouTube.
 
-It should work on 5.3.7 as well, but we strongly advise you NOT to run
-such old versions of PHP, because of potential security and performance
-issues, as well as missing features.
+YouTube: [Czuba Artur](https://www.youtube.com/CzubaArtur)
 
-************
-Installation
-************
+###Blog
 
-Please see the `installation section <https://codeigniter.com/user_guide/installation/index.html>`_
-of the CodeIgniter User Guide.
+Na moim blogu umieszczam wpisy techniczne dotyczące ogólnej informatyki i programowania. Jendak w ramach konkursu
+Daj się poznać 2017 pojawią się tam wpisy dotyczące projektu. Zajmie to mój czas pomiędzy nagraniami.
 
-*******
-License
-*******
+Blog: [Czubeka2](https://czubeka2.pl)
 
-Please see the `license
-agreement <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/license.rst>`_.
+###Uwagi
 
-*********
-Resources
-*********
+Wasze uwagi są dla mnie niezwykle cenne i jeśli masz jakieś to załóż proszę Issue na GitHub, lub pisz bezpośrednio na adres
+(jestem.czuba@gmail.com)
 
--  `User Guide <https://codeigniter.com/docs>`_
--  `Language File Translations <https://github.com/bcit-ci/codeigniter3-translations>`_
--  `Community Forums <http://forum.codeigniter.com/>`_
--  `Community Wiki <https://github.com/bcit-ci/CodeIgniter/wiki>`_
--  `Community IRC <https://webchat.freenode.net/?channels=%23codeigniter>`_
+###CodeIgniter
 
-Report security issues to our `Security Panel <mailto:security@codeigniter.com>`_
-or via our `page on HackerOne <https://hackerone.com/codeigniter>`_, thank you.
+Cały projekt jest realizowany w oparciu o framework CodeIgniter w wersji 3.1.3
 
-***************
-Acknowledgement
-***************
-
-The CodeIgniter team would like to thank EllisLab, all the
-contributors to the CodeIgniter project and you, the CodeIgniter user.
+Strona: [CodeIgniter](https://codeigniter.com/)
