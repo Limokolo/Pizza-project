@@ -5,8 +5,11 @@ Wszyscy lubimy pizzę, ale nie każdy lokal może pochwalić się stroną intern
 i zapewnić aplikację która pozwoli bez problemu zarządzać swoim menu. Projekt powstaje również w celu usystematyzowania
 dotychczasowej wiedzy i chęci przekazania jej dalej.
 
+###Daj się poznać 2017
 
-![Daj się poznać 2017](https://czubeka2.pl/wp-content/uploads/2017/02/dsp2017-2.png) Projekt bierze udział w konkursie Daj się poznać 2017, a co za tym idzie, opisywany jest na moim blogu. Tam umieszczam
+![Daj się poznać 2017](https://czubeka2.pl/wp-content/uploads/2017/02/dsp2017-1.png)
+
+Projekt bierze udział w konkursie Daj się poznać 2017, a co za tym idzie, opisywany jest na moim blogu. Tam umieszczam
 przemyślenia na temat kolejnych kroków, które podejmę w kolejnych nagraniach.
 
 Strona projektu: [Daj się poznać 2017](http://devstyle.pl/daj-sie-poznac)
