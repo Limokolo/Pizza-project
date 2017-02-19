@@ -43,4 +43,41 @@ class Pizzas_model extends CI_model {
     return $result -> result('Component');
   }
 
+  public function addComponent($component_id, $pizza_id, $count = 1){
+    $result = $this -> db -> where('pizza_id', $pizza_id) -> where('component_id', $component_id) -> get('components_in_pizza');
+    if($result -> num_rows()){
+      $cip = $result -> result()[0];
+
+      $cip -> count += $count;
+      $this -> db -> set('count', $cip -> count) -> where('component_id', $cip -> component_id) -> where('pizza_id', $cip -> pizza_id) -> update('components_in_pizza');
+
+      if($this -> db -> affected_rows() > 0){
+        return $cip;
+      } else {
+        return false;
+      }
+    }
+
+    $cip = array(
+      'pizza_id' => $pizza_id,
+      'component_id' => $component_id,
+      'count' => $count
+    );
+
+    $cip = (object)$cip;
+
+    $this -> db -> insert('components_in_pizza', $cip);
+
+    if($this -> db -> affected_rows() > 0){
+      return $cip;
+    } else {
+      return false;
+    }
+  }
+
+  public function checkIfExists($id){
+    $result = $this -> db -> where('id', $id) -> get('pizza');
+    return $result -> num_rows() > 0;
+  }
+
 }

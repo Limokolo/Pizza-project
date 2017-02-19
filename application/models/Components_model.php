@@ -29,13 +29,17 @@ class Components_model extends CI_model {
     return null;
   }
 
-  private function checkIfExists(Component $_component){
-    $component = $this -> db -> where('name', $_component -> name) -> get('components');
-    return $component -> num_rows() > 0;
+
+  public function checkIfExists($id){
+    $result = $this -> db -> where('id', $id) -> get('components');
+    return $result -> num_rows() > 0;
   }
 
   public function add(Component $_component){
-    if($this -> checkIfExists($_component)){
+    $component = $this -> db -> where('name', $_component -> name) -> get('components');
+    $exists =  $component -> num_rows() > 0;
+
+    if($exists){
       return false;
     }
 

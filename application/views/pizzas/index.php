@@ -137,7 +137,7 @@
 
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="new-component-button">Dodaj</button>
+            <button type="button" class="btn btn-primary" id="new_pizza_button">Dodaj</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Analuj</button>
           </div>
         </div><!-- /.modal-content -->
@@ -237,7 +237,7 @@
         $('#newModal').modal('show');
       });
 
-      $(document).on('click', '#new-component-button', function(){
+      $(document).on('click', '#new_pizza_button', function(){
         var component_data = $('#add_component_form').serialize();
 
         var name = $('#add_component_form').find('input[name="name"]').val();
