@@ -29,23 +29,19 @@ class Components_model extends CI_model {
     return null;
   }
 
+  public function getByPizzaId($_id){
+    $components = $this -> db
+      -> from('components_in_pizza as cip')
+      -> where('cip.pizza_id', $_id)
+      -> join('components', 'components.id = cip.component_id')
+      -> select('components.*')
+      -> get();
 
-  public function checkIfExists($id){
-    $result = $this -> db -> where('id', $id) -> get('components');
-    return $result -> num_rows() > 0;
-  }
-
-  public function add(Component $_component){
-    $component = $this -> db -> where('name', $_component -> name) -> get('components');
-    $exists =  $component -> num_rows() > 0;
-
-    if($exists){
-      return false;
+    if($components -> num_rows() > 0){
+      return $components -> result('Component');
     }
 
-    $this -> db -> insert('components', $_component);
-    $id = $this -> db -> insert_id();
-    return $this -> get($id);
+    return null;
   }
 
 }

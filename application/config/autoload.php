@@ -133,3 +133,10 @@ $autoload['language'] = array();
 |	$autoload['model'] = array('first_model' => 'first');
 */
 $autoload['model'] = array();
+
+
+// class
+
+require_once 'application/class/Pizza.php';
+require_once 'application/class/Component.php';
+require_once 'application/class/Size.php';
