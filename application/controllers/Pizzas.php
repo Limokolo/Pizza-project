@@ -8,7 +8,8 @@ class Pizzas extends CI_Controller {
   function __construct(){
     parent::__construct();
 
-    $this -> _is_admin = strpos($_SERVER['REQUEST_URI'], 'admin') !== false;
+    $this -> load -> model('Admin_model');
+    $this -> _is_admin = $this -> Admin_model -> checkLogin();
 
     $this -> load -> model('Pizzas_model');
   }
@@ -16,23 +17,43 @@ class Pizzas extends CI_Controller {
   public function index(){
     $pizzas = $this -> Pizzas_model -> getAll();
 
-    $this -> load -> model('Components_model');
-    $this -> load -> model('Sizes_model');
-    foreach($pizzas as $p){
-      $p -> components = $this -> Components_model -> getByPizzaId($p -> id);
-      $p -> sizes = $this -> Sizes_model -> getByPizzaId($p -> id);
-    }
-
     if($this -> _is_admin){
-      print_r($pizzas);
+      $this -> load -> view('admin/pizzas/index', [
+          'pizzas' => $pizzas
+      ]);
     } else {
       echo "Welcome";
     }
+  }
+
+  public function get($_id){
+
+    $pizza = $this -> Pizzas_model -> get($_id);
+
+    if($pizza !== null){
+      $this -> load -> model('Components_model');
+      $this -> load -> model('Sizes_model');
+
+      $pizza -> components = $this -> Components_model -> getByPizzaId($pizza -> id);
+      $pizza -> sizes = $this -> Sizes_model -> getByPizzaId($pizza -> id);
+
+      if($this -> _is_admin){
+        $this -> load -> view('admin/pizzas/get', [
+            'pizza' => $pizza
+        ]);
+      } else {
+        $this -> load -> view('pizzas/get', [
+            'pizza' => $pizza
+        ]);
+      }
+    } else {
+      if($this -> _is_admin){
+        $this -> load -> view('admin/pizzas/notfound');
+      } else {
+        $this -> load -> view('pizzas/notfound');
+      }
+    }
 
 
-    // $this -> load -> view('pizzas/index', [
-    //     'is_admin' => $this -> _is_admin,
-    //     'pizzas' => $pizzas
-    // ]);
   }
 }
