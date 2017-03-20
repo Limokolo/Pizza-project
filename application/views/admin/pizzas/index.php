@@ -4,7 +4,10 @@
 ?>
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Lista pizz</h1>
+        <h1 class="page-header">
+          Lista pizz
+          <a href="<?=base_url('admin/pizzas/create')?>" class="btn btn-primary pull-right">Dodaj nową</a>
+        </h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -23,7 +26,13 @@
           <tr>
               <td><?=$pizza -> name?></td>
               <td><?=$pizza -> description?></td>
-              <td><a href="<?=base_url('admin/pizzas/get/' . $pizza -> id)?>" class="btn btn-primary">Szczegóły</a></td>
+              <td>
+                  <div class="pull-right">
+                    <a href="<?=base_url('admin/pizzas/get/' . $pizza -> id)?>" class="btn btn-primary">Szczegóły</a>
+                    <a href="<?=base_url('admin/pizzas/update/' . $pizza -> id)?>" class="btn btn-warning">Edycja</a>
+                    <a href="<?=base_url('admin/pizzas/delete/' . $pizza -> id)?>" class="btn btn-danger">Skasuj</a>
+                  </div>
+              </td>
           </tr>
         <?php endforeach; ?>
       </tbody>

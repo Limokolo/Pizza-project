@@ -28,7 +28,7 @@ class Sizes_model extends CI_model {
       return $sizes -> result('Size');
     }
 
-    return null;
+    return [];
   }
 
 }

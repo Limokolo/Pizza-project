@@ -31,4 +31,33 @@ class Pizzas_model extends CI_model {
     return null;
   }
 
+  public function isValid($pizza){
+    if(!isset($pizza -> name) || empty($pizza -> name)){
+      return false;
+    }
+
+    return true;
+  }
+
+  public function add($pizza){
+    $this -> db -> insert('pizza', $pizza);
+    return $this -> db -> affected_rows() > 0;
+  }
+
+  public function update($pizza){
+    $this -> db -> trans_start();
+    $this -> db -> where('id', $pizza -> id) -> update('pizza', $pizza);
+    $this -> db -> trans_complete();
+
+    if ($this -> db -> trans_status() === FALSE) {
+      return false;
+    }
+
+    return true;
+  }
+
+  public function delete($pizza){
+    $this -> db -> where('id', $pizza -> id) -> delete('pizza');
+    return $this -> db -> affected_rows() > 0;
+  }
 }

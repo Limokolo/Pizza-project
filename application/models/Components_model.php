@@ -41,7 +41,7 @@ class Components_model extends CI_model {
       return $components -> result('Component');
     }
 
-    return null;
+    return [];
   }
 
 }
