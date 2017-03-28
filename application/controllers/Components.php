@@ -36,9 +36,9 @@ class Components extends CI_Controller {
     if($this -> input -> post()){ // To jest wysłanie formularza
       $_component = $this -> parse();
       if($this -> Components_model -> isValid($_component)){ // Składnik jest poprawny
-        if($this -> Components_model -> add($_component)){ // Aktualizacja powiodła się
+        if($this -> Components_model -> add($_component)){ // Dodanie powiodło się
           $this -> viewData['success'] = 'component_added';
-        } else { // Aktualizacja nie powiodła się
+        } else { // Dodanie nie powiodło się
           $this -> viewData['errors'] = 'cannot_update_db';
         }
       } else { // Składnik nie jest poprawny

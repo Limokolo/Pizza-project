@@ -63,6 +63,7 @@ class Components_model extends CI_model {
 
   public function delete($component){
     $this -> db -> where('id', $component -> id) -> delete('components');
+    $this -> db -> where('component_id', $component -> id) -> delete('components_in_pizza');
     return $this -> db -> affected_rows() > 0;
   }
 

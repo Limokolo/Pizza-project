@@ -58,6 +58,17 @@ class Pizzas_model extends CI_model {
 
   public function delete($pizza){
     $this -> db -> where('id', $pizza -> id) -> delete('pizza');
+    $this -> db -> where('pizza_id', $pizza -> id) -> delete('components_in_pizza');
+    return $this -> db -> affected_rows() > 0;
+  }
+
+  public function addComponent($component, $pizza){
+    $this -> db -> insert('components_in_pizza', ['pizza_id' => $pizza -> id, 'component_id' => $component -> id]);
+    return $this -> db -> affected_rows() > 0;
+  }
+
+  public function removeComponent($component, $pizza){
+    $this -> db -> where('component_id', $component -> id) -> where('pizza_id', $pizza -> id) -> delete('components_in_pizza');
     return $this -> db -> affected_rows() > 0;
   }
 }

@@ -15,6 +15,8 @@ class Pizzas extends CI_Controller {
     $this -> is_admin = $this -> Admin_model -> checkLogin();
 
     $this -> load -> model('Pizzas_model');
+    $this -> load -> model('Components_model');
+    $this -> load -> model('Sizes_model');
 
     $this -> viewData = [];
     $this -> view = '';
@@ -74,6 +76,16 @@ class Pizzas extends CI_Controller {
     $pizza = $this -> checkIfExists($_id);
     $this -> view .= 'update';
 
+    if($this -> session -> has_userdata('errors')){
+      $this -> viewData['errors'] = $this -> session -> errors;
+      $this -> session -> unset_userdata('errors');
+    }
+
+    if($this -> session -> has_userdata('success')){
+      $this -> viewData['success'] = $this -> session -> success;
+      $this -> session -> unset_userdata('success');
+    }
+
     if($this -> input -> post()){
       $pizza = $this -> parse();
       if(!$this -> Pizzas_model -> isValid($pizza)){
@@ -88,7 +100,13 @@ class Pizzas extends CI_Controller {
       }
     }
     $this -> viewData['pizza'] = $pizza;
-
+    $this -> viewData['components'] = [];
+    $components = $this -> Components_model -> getAll();
+    foreach($components as $component){
+      if(!in_array($component, $pizza -> components)){
+        $this -> viewData['components'][] = $component;
+      }
+    }
     $this -> load -> view($this -> view, $this -> viewData);
   }
 
@@ -116,14 +134,53 @@ class Pizzas extends CI_Controller {
     $this -> load -> view($this -> view);
   }
 
+  public function addComponent($_id){
+    $this -> view .= 'update/' . $_id;
+    $pizza = $this -> checkIfExists($_id);
+
+    if($this -> input -> post()){
+      $component_id = $this -> input -> post('component_id');
+      $component = $this -> Components_model -> get($component_id);
+      if($component !== null){ // Składnik istnieje
+        if($this -> Pizzas_model -> addComponent($component, $pizza)){ // Dodano składnik
+          $this -> session -> success = 'component_added';
+        } else { // Nie dodano składnika
+          $this -> session -> error = 'cannot_add_component';
+        }
+      } else { // Składnik nie istnieje
+        $this -> session -> error = 'component_not_exists';
+      }
+
+    }
+
+    redirect($this -> view);
+    $this -> load -> view($this -> view, $this -> viewData);
+  }
+
+  public function removeComponent($_id, $_component_id){
+    $this -> view .= 'update/' . $_id;
+    $pizza = $this -> checkIfExists($_id);
+
+    $component = $this -> Components_model -> get($_component_id);
+    if($component !== null){ // Składnik istnieje
+      if($this -> Pizzas_model -> removeComponent($component, $pizza)){ // Dodano składnik
+        $this -> session -> success = 'component_added';
+      } else { // Nie dodano składnika
+        $this -> session -> error = 'cannot_remove_component';
+      }
+    } else { // Składnik nie istnieje
+      $this -> session -> error = 'component_not_exists';
+    }
+
+    redirect($this -> view);
+    $this -> load -> view($this -> view, $this -> viewData);
+  }
+
   private function _get($_id){
     $pizza = $this -> Pizzas_model -> get($_id);
     if($pizza === null){
       return null;
     }
-
-    $this -> load -> model('Components_model');
-    $this -> load -> model('Sizes_model');
 
     $pizza -> components = $this -> Components_model -> getByPizzaId($pizza -> id);
     $pizza -> sizes = $this -> Sizes_model -> getByPizzaId($pizza -> id);
