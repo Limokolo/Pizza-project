@@ -39,7 +39,7 @@ class Pizzas_model extends CI_model {
     return true;
   }
 
-  public function add($pizza){
+  public function create($pizza){
     $this -> db -> insert('pizza', $pizza);
     return $this -> db -> affected_rows() > 0;
   }

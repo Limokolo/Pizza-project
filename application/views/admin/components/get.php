@@ -4,13 +4,10 @@
 ?>
 
 <div class="page-header">
-  <h1>Pomyślnie dodano nową pizzę</h1>
-</div>
-
-<div class="row">
-  <div class="col-md-12">
-    <a href="<?=base_url('admin/pizzas/')?>" class="btn btn-primary">Powrót</a>
-  </div>
+  <h1>
+    <?=$component -> name?>
+    <a href="<?=base_url('admin/components/update/' . $component -> id )?>" class="btn btn-primary pull-right">Edycja</a>
+  </h1>
 </div>
 
 <?php

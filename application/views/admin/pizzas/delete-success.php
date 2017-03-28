@@ -1,6 +1,6 @@
 <?php
-  $this -> load -> view('head');
-  $this -> load -> view('layout_start');
+  $this -> load -> view('admin/head');
+  $this -> load -> view('admin/layout_start');
 ?>
 
 <div class="page-header">
@@ -14,6 +14,6 @@
 </div>
 
 <?php
-  $this -> load -> view('layout_end');
-  $this -> load -> view('footer');
+  $this -> load -> view('admin/layout_end');
+  $this -> load -> view('admin/footer');
 ?>

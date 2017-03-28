@@ -4,12 +4,12 @@
 ?>
 
 <div class="page-header">
-  <h1>Pomyślnie dodano nową pizzę</h1>
+  <h1>Nie znaleziono składnika</h1>
 </div>
 
 <div class="row">
   <div class="col-md-12">
-    <a href="<?=base_url('admin/pizzas/')?>" class="btn btn-primary">Powrót</a>
+    <a href="<?=base_url('admin/components/')?>" class="btn btn-primary">Powrót</a>
   </div>
 </div>
 

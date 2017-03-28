@@ -1,9 +1,8 @@
 <?php
-  $this -> load -> view('head');
-  $this -> load -> view('layout_start');
+  $this -> load -> view('admin/head');
+  $this -> load -> view('admin/layout_start');
 ?>
 <form method="post" action="<?=base_url('admin/pizzas/update/' . $pizza -> id)?>">
-  <input type="hidden" name="id" value="<?=$pizza -> id?>" />
   <div class="page-header">
     <div class="row">
       <?php if(isset($errors)){ ?>
@@ -63,6 +62,6 @@
 </form>
 
 <?php
-  $this -> load -> view('layout_end');
-  $this -> load -> view('footer');
+  $this -> load -> view('admin/layout_end');
+  $this -> load -> view('admin/footer');
 ?>

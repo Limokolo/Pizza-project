@@ -4,7 +4,7 @@
 ?>
 
 <div class="page-header">
-  <h1>Pomyślnie dodano nową pizzę</h1>
+  <h1>Nie znaleziono pizzy</h1>
 </div>
 
 <div class="row">

@@ -36,6 +36,9 @@
                         <li>
                             <a href="<?=base_url('admin/pizzas')?>"><i class="fa fa-dashboard fa-fw"></i> Lista pizz</a>
                         </li>
+                        <li>
+                            <a href="<?=base_url('admin/components')?>"><i class="fa fa-dashboard fa-fw"></i> Lista składników</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
