@@ -31,5 +31,4 @@ class Sizes_model extends CI_model {
     return [];
   }
 
-
 }

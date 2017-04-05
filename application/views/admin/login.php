@@ -10,7 +10,7 @@
     $password_pass = false;
   }
 
-  $this -> view('admin/head');
+  $this -> view('head');
 ?>
 
 <div class="container">
@@ -48,6 +48,6 @@
 
 <?php
 
-  $this -> view('admin/footer');
+  $this -> view('footer');
 
   ?>

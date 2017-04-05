@@ -3,49 +3,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Pizzas extends CI_Controller {
 
-  private $is_admin;
-
-  private $viewData;
-  private $view;
+  private $_is_admin;
 
   function __construct(){
     parent::__construct();
 
     $this -> load -> model('Admin_model');
-    $this -> is_admin = $this -> Admin_model -> checkLogin();
+    $this -> _is_admin = $this -> Admin_model -> checkLogin();
 
     $this -> load -> model('Pizzas_model');
-    $this -> load -> model('Components_model');
-    $this -> load -> model('Sizes_model');
-
-    $this -> viewData = [];
-    $this -> view = '';
-
-    if($this -> is_admin){
-      $this -> view .= 'admin/';
-    }
-    $this -> view .= 'pizzas/';
   }
 
   public function index(){
-    $this -> view .= 'index';
-    $this -> viewData['pizzas'] = $this -> Pizzas_model -> getAll();
-    $this -> load -> view($this -> view, $this -> viewData);
+    $pizzas = $this -> Pizzas_model -> getAll();
+
+    if($this -> _is_admin){
+      $this -> load -> view('admin/pizzas/index', [
+          'pizzas' => $pizzas
+      ]);
+    } else {
+      echo "Welcome";
+    }
   }
 
   public function get($_id){
+
     $pizza = $this -> _get($_id);
 
-    if($pizza == null){
-      $this -> view .= 'not_found';
-
-      redirect($this -> view);
-      return;
+    if($pizza !== null){
+      if($this -> _is_admin){
+        $this -> load -> view('admin/pizzas/get', [
+            'pizza' => $pizza
+        ]);
+      } else {
+        $this -> load -> view('pizzas/get', [
+            'pizza' => $pizza
+        ]);
+      }
+    } else {
+      if($this -> _is_admin){
+        $this -> load -> view('admin/pizzas/notfound');
+      } else {
+        $this -> load -> view('pizzas/notfound');
+      }
     }
-    $this -> view .= 'get';
-    $this -> viewData['pizza'] = $pizza;
-
-    $this -> load -> view($this -> view, $this -> viewData);
   }
 
   public function create(){
@@ -54,126 +55,69 @@ class Pizzas extends CI_Controller {
       $pizza = $this -> parse();
 
       if(!$this -> Pizzas_model -> isValid($pizza)){
-        $this -> view .= 'create';
-        $this -> viewData['errors'] = "cannot_add";
+        $this -> load -> view('admin/pizzas/create', ['errors' => 'cannot_add']);
       } else {
-        if($this -> Pizzas_model -> add($pizza)){
-          $this -> view .= 'create-success';
+        if(!$this -> Pizzas_model -> add($pizza)){
+          $this -> load -> view('admin/pizzas/create', ['errors' => 'cannot_add']);
         } else {
-          $this -> view .= 'create';
-          $this -> viewData['errors'] = "cannot_add";
+          $this -> load -> view('admin/pizzas/create-success');
         }
       }
 
     } else {
-      $this -> view .= 'create';
+      $this -> load -> view('admin/pizzas/create');
     }
-
-    $this -> load -> view($this -> view, $this -> viewData);
   }
 
   public function update($_id){
-    $pizza = $this -> checkIfExists($_id);
-    $this -> view .= 'update';
-
-    if($this -> session -> has_userdata('errors')){
-      $this -> viewData['errors'] = $this -> session -> errors;
-      $this -> session -> unset_userdata('errors');
-    }
-
-    if($this -> session -> has_userdata('success')){
-      $this -> viewData['success'] = $this -> session -> success;
-      $this -> session -> unset_userdata('success');
+    if(!$this -> _is_admin){
+      redirect(base_url('pizzas/index'));
+      return;
     }
 
     if($this -> input -> post()){
+
       $pizza = $this -> parse();
       if(!$this -> Pizzas_model -> isValid($pizza)){
-        $this -> viewData['errors'] = 'cannot_update';
+        $this -> load -> view('admin/pizzas/update', ['errors' => 'cannot_update', 'pizza' => $this -> _get($_id)]);
       } else {
         if(!$this -> Pizzas_model -> update($pizza)){
-          $this -> viewData['errors'] = 'cannot_update';
+          $this -> load -> view('admin/pizzas/update', ['errors' => 'cannot_update', 'pizza' => $this -> _get($_id)]);
         } else {
-          $this -> viewData['success'] = 'updated';
-          $pizza = $this -> _get($_id);
+          $this -> load -> view('admin/pizzas/update', ['success' => 'updated', 'pizza' => $this -> _get($_id)]);
         }
       }
-    }
-    $this -> viewData['pizza'] = $pizza;
-    $this -> viewData['components'] = [];
-    $components = $this -> Components_model -> getAll();
-    foreach($components as $component){
-      if(!in_array($component, $pizza -> components)){
-        $this -> viewData['components'][] = $component;
+    } else {
+      $pizza = $this -> _get($_id);
+
+      if($pizza !== null){
+        $this -> load -> view('admin/pizzas/update', [
+            'pizza' => $pizza
+        ]);
+      } else {
+        $this -> load -> view('admin/pizzas/notfound');
       }
     }
-    $this -> load -> view($this -> view, $this -> viewData);
   }
 
   public function delete($_id){
-    $pizza = $this -> checkIfExists($_id);
+    $pizza = $this -> _get($_id);
 
     if($this -> input -> post()){
       if(!$this -> Pizzas_model -> delete($pizza)){
-        $this -> viewData['errors'] = 'cannot_delete';
-        $this -> view .= 'delete';
+        $this -> load -> view('admin/pizzas/delete', ['errors' => 'cannot_delete']);
       } else {
-        $this -> view .= 'delete-success';
+        $this -> load -> view('admin/pizzas/delete-success');
       }
     } else {
-      $this -> view .= 'delete';
-    }
-
-    $this -> viewData['pizza'] = $pizza;
-    $this -> load -> view($this -> view, $this -> viewData);
-  }
-
-  public function not_found(){
-    $this -> view .= 'not_found';
-
-    $this -> load -> view($this -> view);
-  }
-
-  public function addComponent($_id){
-    $this -> view .= 'update/' . $_id;
-    $pizza = $this -> checkIfExists($_id);
-
-    if($this -> input -> post()){
-      $component_id = $this -> input -> post('component_id');
-      $component = $this -> Components_model -> get($component_id);
-      if($component !== null){ // Składnik istnieje
-        if($this -> Pizzas_model -> addComponent($component, $pizza)){ // Dodano składnik
-          $this -> session -> success = 'component_added';
-        } else { // Nie dodano składnika
-          $this -> session -> error = 'cannot_add_component';
-        }
-      } else { // Składnik nie istnieje
-        $this -> session -> error = 'component_not_exists';
+      if($pizza !== null){
+        $this -> load -> view('admin/pizzas/delete', [
+            'pizza' => $pizza
+        ]);
+      } else {
+        $this -> load -> view('admin/pizzas/notfound');
       }
-
     }
-
-    redirect($this -> view);
-    $this -> load -> view($this -> view, $this -> viewData);
-  }
-
-  public function removeComponent($_id, $_component_id){
-    $this -> view .= 'update/' . $_id;
-    $pizza = $this -> checkIfExists($_id);
-
-    $component = $this -> Components_model -> get($_component_id);
-    if($component !== null){ // Składnik istnieje
-      if($this -> Pizzas_model -> removeComponent($component, $pizza)){ // Dodano składnik
-        $this -> session -> success = 'component_added';
-      } else { // Nie dodano składnika
-        $this -> session -> error = 'cannot_remove_component';
-      }
-    } else { // Składnik nie istnieje
-      $this -> session -> error = 'component_not_exists';
-    }
-
-    redirect($this -> view);
-    $this -> load -> view($this -> view, $this -> viewData);
   }
 
   private function _get($_id){
@@ -181,6 +125,9 @@ class Pizzas extends CI_Controller {
     if($pizza === null){
       return null;
     }
+
+    $this -> load -> model('Components_model');
+    $this -> load -> model('Sizes_model');
 
     $pizza -> components = $this -> Components_model -> getByPizzaId($pizza -> id);
     $pizza -> sizes = $this -> Sizes_model -> getByPizzaId($pizza -> id);
@@ -190,22 +137,11 @@ class Pizzas extends CI_Controller {
 
   private function parse(){
     $pizza = [
-      'id' => $this -> input -> post_get('id'),
+      'id' => $this -> input -> post('id'),
       'name' => $this -> input -> post('name'),
       'description' => $this -> input -> post('description')
     ];
 
     return (object) $pizza;
-  }
-
-  private function checkIfExists($_id){
-    $pizza = $this -> _get($_id);
-    if($pizza == null){
-      $this -> view .= 'not_found';
-      redirect($this -> view);
-      return;
-    }
-
-    return $pizza;
   }
 }

@@ -44,34 +44,4 @@ class Components_model extends CI_model {
     return [];
   }
 
-  public function add($component){
-    $this -> db -> insert('components', $component);
-    return $this -> db -> affected_rows() > 0;
-  }
-
-  public function update($component){
-    $this -> db -> trans_start();
-    $this -> db -> where('id', $component -> id) -> update('components', $component);
-    $this -> db -> trans_complete();
-
-    if ($this -> db -> trans_status() === FALSE) {
-      return false;
-    }
-
-    return true;
-  }
-
-  public function delete($component){
-    $this -> db -> where('id', $component -> id) -> delete('components');
-    $this -> db -> where('component_id', $component -> id) -> delete('components_in_pizza');
-    return $this -> db -> affected_rows() > 0;
-  }
-
-  public function isValid($component){
-    if(!isset($component -> name) || empty($component -> name)){
-      return false;
-    }
-    return true;
-  }
-
 }
