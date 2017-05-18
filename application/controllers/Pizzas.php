@@ -42,9 +42,9 @@ class Pizzas extends CI_Controller {
       }
     } else {
       if($this -> _is_admin){
-        $this -> load -> view('admin/pizzas/notfound');
+        $this -> load -> view('admin/pizzas/not_found');
       } else {
-        $this -> load -> view('pizzas/notfound');
+        $this -> load -> view('pizzas/not_found');
       }
     }
   }
@@ -60,7 +60,7 @@ class Pizzas extends CI_Controller {
         if(!$this -> Pizzas_model -> add($pizza)){
           $this -> load -> view('admin/pizzas/create', ['errors' => 'cannot_add']);
         } else {
-          $this -> load -> view('admin/pizzas/create-success');
+          $this -> load -> view('admin/pizzas/create', ['success' => 'created', 'pizza' => $pizza]);
         }
       }
 
@@ -107,7 +107,7 @@ class Pizzas extends CI_Controller {
       if(!$this -> Pizzas_model -> delete($pizza)){
         $this -> load -> view('admin/pizzas/delete', ['errors' => 'cannot_delete']);
       } else {
-        $this -> load -> view('admin/pizzas/delete-success');
+        $this -> load -> view('admin/pizzas/delete', ['success' => 'deleted']);
       }
     } else {
       if($pizza !== null){

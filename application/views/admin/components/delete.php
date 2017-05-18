@@ -17,7 +17,7 @@
     <p>Czy na pewno chcesz usunąć składnik <?=$component -> name?>?</p>
 
     <div class="col-md-6">
-      <a href="<?=base_url('admin/components/get/' . $component -> id)?>" class="btn btn-default btn-block">Anuluj</a>
+      <a href="<?=base_url('admin/components/')?>" class="btn btn-default btn-block">Anuluj</a>
     </div>
     <div class="col-md-6">
       <form method="post" action="<?=base_url('admin/components/delete/' . $component -> id)?>">
@@ -26,11 +26,6 @@
       </form>
     </div>
   <?php endif; ?>
-  <div class="row">
-    <div class="col-md-12">
-      <a href="<?=base_url('admin/components/')?>" class="btn btn-primary">Powrót</a>
-    </div>
-  </div>
 </div>
 
 <?php

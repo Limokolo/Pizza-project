@@ -26,7 +26,6 @@
               <td><?=$component -> name?></td>
               <td>
                   <div class="pull-right">
-                    <a href="<?=base_url('admin/components/get/' . $component -> id)?>" class="btn btn-primary">Szczegóły</a>
                     <a href="<?=base_url('admin/components/update/' . $component -> id)?>" class="btn btn-warning">Edycja</a>
                     <a href="<?=base_url('admin/components/delete/' . $component -> id)?>" class="btn btn-danger">Skasuj</a>
                   </div>

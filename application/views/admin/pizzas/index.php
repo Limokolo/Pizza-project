@@ -1,6 +1,6 @@
 <?php
   $this -> load -> view('head');
-  $this -> load -> view('layout_start');
+  $this -> load -> view('admin/layout_start');
 ?>
 <div class="row">
     <div class="col-lg-12">

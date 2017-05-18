@@ -1,6 +1,6 @@
 <?php
   $this -> load -> view('head');
-  $this -> load -> view('layout_start');
+  $this -> load -> view('admin/layout_start');
 ?>
 
 <div class="page-header">
@@ -11,6 +11,9 @@
   <?php if(isset($errors)){ ?>
   <div class="alert alert-danger" role="alert">Nie udało się usunąć pizzy. Spróbuj ponownie</div>
   <?php } ?>
+  <?php if(isset($success)): ?>
+    <div class="alert alert-success" role="alert">Pomyślnie usunięto pizzę</div>
+  <?php else: ?>
 
     <p>Czy na pewno chcesz usunąć pizzę <?=$pizza -> name?>?</p>
 
@@ -23,6 +26,7 @@
         <button type="submit" class="btn btn-danger btn-block">Usuń</button>
       </form>
     </div>
+  <?php endif; ?>
 </div>
 
 <?php

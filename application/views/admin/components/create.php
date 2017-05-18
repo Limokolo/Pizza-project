@@ -25,11 +25,6 @@
     </div>
   </div>
 <?php endif; ?>
-  <div class="row">
-    <div class="col-md-12">
-      <a href="<?=base_url('admin/components/')?>" class="btn btn-primary">Powrót</a>
-    </div>
-  </div>
 </form>
 
 <?php

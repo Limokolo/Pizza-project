@@ -1,6 +1,6 @@
 <?php
   $this -> load -> view('head');
-  $this -> load -> view('layout_start');
+  $this -> load -> view('admin/layout_start');
 ?>
 
 <div class="page-header">
@@ -9,6 +9,9 @@
 <?php if(isset($errors)){ ?>
 <div class="alert alert-danger" role="alert">Nie udało się dodać pizzy. Spróbuj ponownie</div>
 <?php } ?>
+<?php if(isset($success)): ?>
+  <div class="alert alert-success" role="alert">Pomyślnie dodano pizzę</div>
+<?php else: ?>
 
 <form class="form-horizontal" method="post" action="<?=base_url('admin/pizzas/create')?>">
   <div class="form-group">
@@ -28,6 +31,7 @@
       <button type="submit" class="btn btn-primary pull-right">Zapisz</button>
     </div>
   </div>
+<?php endif; ?>
 </form>
 
 <?php

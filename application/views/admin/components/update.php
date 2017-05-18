@@ -4,6 +4,7 @@
 
 ?>
 <form method="post" action="<?=base_url('admin/components/update/' . $component -> id)?>">
+  <input type="hidden" name="id" value="<?=$component -> id?>" />
   <div class="page-header">
     <div class="row">
       <?php if(isset($errors)){ ?>

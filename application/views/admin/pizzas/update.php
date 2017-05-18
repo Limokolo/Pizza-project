@@ -1,6 +1,6 @@
 <?php
   $this -> load -> view('head');
-  $this -> load -> view('layout_start');
+  $this -> load -> view('admin/layout_start');
 ?>
 <form method="post" action="<?=base_url('admin/pizzas/update/' . $pizza -> id)?>">
   <input type="hidden" name="id" value="<?=$pizza -> id?>" />
